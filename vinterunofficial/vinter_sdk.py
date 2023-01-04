@@ -162,7 +162,7 @@ class VinterAPI:
 
             if symbol not in self.valid_symbols:
                 raise ValueError(
-                    "The symbol is not a present in the list of active symbols."
+                    f"The symbol is not a present in the list of active symbols for asset_type {self.asset_type}."
                 )
                 
             raise ValueError("No data was found for the symbol: {}".format(symbol))
