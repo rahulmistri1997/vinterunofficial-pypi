@@ -1,0 +1,5 @@
+{
+    "python.formatting.provider": "black",
+    "docwriter.style": "NumPy",
+    "python.analysis.inlayHints.variableTypes": false
+}
