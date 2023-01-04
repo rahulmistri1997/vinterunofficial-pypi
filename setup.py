@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name="vinterunofficial",
-	version="0.0.1",
+	version="0.0.2",
 	description="This is a unofficial wrapper for Vinter.co API",
 	long_description="This is a unofficial wrapper for Vinter.co API",
 	install_requires=["requests==2.28.1"],
