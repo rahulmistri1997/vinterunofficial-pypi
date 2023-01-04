@@ -24,9 +24,6 @@ from vinterunofficial import VinterAPI
 # vinter = VinterAPI(<APIKEY>, <AssetType>)
 vinter = VinterAPI(123456, "single_assets")
 
-# Get all assets (AssetType = single_assets) as while Creating the object we have set AssetType = single_assets
-all_active_symbol = [asset["symbol"] for asset in vinter.get_all_active_symbols()]
-
 selected_symbol = "btc-usd-p-d"
 
 # Get the latest value of the asset
@@ -46,9 +43,6 @@ from vinterunofficial import VinterAPI
 # vinter = VinterAPI(<APIKEY>, <AssetType>)
 vinter = VinterAPI(123456, "single_assets")
 
-# Get all assets (AssetType = single_assets) as while Creating the object we have set AssetType = single_assets
-all_active_symbol = [asset["symbol"] for asset in vinter.get_all_active_symbols()]
-
 selected_symbol = "btc-usd-p-d"
 
 # Get the latest value of the asset
@@ -59,4 +53,17 @@ for asset in data:
 
 ```
 
+### Get All Active Symbols
+```python
+from vinterunofficial import VinterAPI
 
+single_assets = VinterAPI(123456, "single_assets")
+multi_assets = VinterAPI(123456, "multi_assets")
+
+all_active_symbol_multi = [asset["symbol"] for asset in multi_assets.get_all_active_symbols()]
+all_active_symbol_single = [asset["symbol"] for asset in single_assets.get_all_active_symbols()]
+
+print("All active symbols for multi assets: {}".format(all_active_symbol_multi))
+print("All active symbols for single assets: {}".format(all_active_symbol_single))
+
+```
