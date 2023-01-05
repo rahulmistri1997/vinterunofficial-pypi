@@ -27,7 +27,9 @@ vinter = VinterAPI(123456, "single_assets")
 selected_symbol = "btc-usd-p-d"
 
 # Get the latest value of the asset
-data = vinter.get_latest_data(selected_symbol)
+data = vinter.get_latest_data(selected_symbol, limit=1)
+# The returned data is a list of dictionaries as shown in the sample response in the documentation
+# You can also increase the limit to get more than one value which will return a list ordered by the latest to the oldest
 
 current_price = data[0]["value"]
 created_at = data[0]["created_at"]
@@ -36,7 +38,7 @@ print("The current price of {} is {} at {}".format(selected_symbol, current_pric
 
 ```
 
-### Get Historical Data
+### Get Historical Data (Only Daily Supported)
 ```python
 from vinterunofficial import VinterAPI
 
