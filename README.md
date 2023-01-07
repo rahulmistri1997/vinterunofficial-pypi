@@ -38,6 +38,22 @@ print("The current price of {} is {} at {}".format(selected_symbol, current_pric
 
 ```
 
+### If you just want the latest value
+```python
+from vinterunofficial import VinterAPI
+
+vinter = VinterAPI(123456, "single_assets")
+
+selected_symbol = "btc-usd-p-d"
+
+# Get the latest value of the asset
+
+current_price = vinter.get_latest_value(selected_symbol)
+
+print("The current price of {} is {}".format(selected_symbol, current_price))
+
+```
+
 ### Get Historical Data (Only Daily Supported)
 ```python
 from vinterunofficial import VinterAPI
@@ -67,5 +83,106 @@ all_active_symbol_single = [asset["symbol"] for asset in single_assets.get_all_a
 
 print("All active symbols for multi assets: {}".format(all_active_symbol_multi))
 print("All active symbols for single assets: {}".format(all_active_symbol_single))
+
+```
+
+### Get Contribution of Single Asset
+```python
+from vinterunofficial import VinterAPI
+
+single_assets = VinterAPI(123456, "single_assets")
+
+selected_symbol = "btc-usd-p-r"
+
+single_asset_contribution = single_assets.get_contribution(selected_symbol)
+
+print("The contribution of {} is {}".format(selected_symbol, single_asset_contribution))
+
+```
+
+### Get Weight of Multi Asset
+```python
+from vinterunofficial import VinterAPI
+
+multi_assets = VinterAPI(123456, "multi_assets")
+
+selected_symbol = "vnby-bold1-2-d"
+
+multi_asset_weight = multi_assets.get_current_rebalance_weight(selected_symbol)
+
+print("The weight of {} is {}".format(selected_symbol, multi_asset_weight))
+
+```
+
+### Get Next Rebalance Date of Multi Asset
+```python
+from vinterunofficial import VinterAPI
+
+multi_assets = VinterAPI(123456, "multi_assets")
+
+selected_symbol = "vnby-bold1-2-d"
+
+next_rebalance_date = multi_assets.get_next_rebalance_date(selected_symbol)
+
+print("The next rebalance date of {} is {}".format(selected_symbol, next_rebalance_date))
+
+```
+
+### Get Previous Rebalance Date of Multi Asset
+```python
+from vinterunofficial import VinterAPI
+
+multi_assets = VinterAPI(123456, "multi_assets")
+
+selected_symbol = "vnby-bold1-2-d"
+
+previous_rebalance_date = multi_assets.get_previous_rebalance_date(selected_symbol)
+
+print("The previous rebalance date of {} is {}".format(selected_symbol, previous_rebalance_date))
+
+```
+
+### Get Next Review Date of Multi Asset
+```python
+
+from vinterunofficial import VinterAPI
+
+multi_assets = VinterAPI(123456, "multi_assets")
+
+selected_symbol = "vnby-bold1-2-d"
+
+next_review_date = multi_assets.get_next_review_date(selected_symbol)
+
+print("The next review date of {} is {}".format(selected_symbol, next_review_date))
+
+```
+
+### Get Previous Review Date of Multi Asset
+```python
+
+from vinterunofficial import VinterAPI
+
+multi_assets = VinterAPI(123456, "multi_assets")
+
+selected_symbol = "vnby-bold1-2-d"
+
+previous_review_date = multi_assets.get_previous_review_date(selected_symbol)
+
+print("The previous review date of {} is {}".format(selected_symbol, previous_review_date))
+
+```
+
+### Get Next Rebalance Weight of Multi Asset
+```python
+
+from vinterunofficial import VinterAPI
+
+multi_assets = VinterAPI(123456, "multi_assets")
+
+selected_symbol = "vnby-bold1-2-d"
+
+next_rebalance_weight = multi_assets.get_next_rebalance_weight(selected_symbol)
+
+print("The next rebalance weight of {} is {}".format(selected_symbol, next_rebalance_weight))
 
 ```
