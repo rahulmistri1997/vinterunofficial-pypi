@@ -52,7 +52,9 @@ class VinterAPI:
 
         headers = {}
         response = requests.get(url, headers=headers)
-        return response.json()["data"]
+        data = response.json()["data"]
+        self.valid_symbols = [symbol["symbol"] for symbol in data]
+        return data
 
     def populate_valid_symbols(self) -> None:
         """This function populates the valid_symbols attribute of the class with a list of all the
@@ -168,6 +170,298 @@ class VinterAPI:
             raise ValueError("No data was found for the symbol: {}".format(symbol))
 
         return data
+
+    def get_latest_value(self, symbol: str) -> float:
+        """This function takes in a symbol and returns the latest value for that symbol
+
+        Parameters
+        ----------
+        symbol : str
+            The symbol of the asset you want to get data for.
+
+        Returns
+        -------
+            The latest value for the symbol
+
+        """
+        data = self.get_latest_data(symbol=symbol)
+        return data[0]["value"]
+
+    def _get_active_asset_data(self, symbol: str) -> dict:
+        """This function returns the data for the active asset
+
+        Parameters
+        ----------
+        symbol : str
+            The symbol of the asset you want to get data for.
+
+        Returns
+        -------
+            A dictionary of the data for the active asset
+
+        """
+
+        symbol, frequency = self.validate_symbol_frequency(symbol)
+        
+        data = self.get_all_active_symbols()
+
+        output = {}
+
+        for asset in data:
+            if asset["symbol"] == symbol:
+                output = asset
+                break
+
+        if len(output) == 0:
+
+            if symbol not in self.valid_symbols:
+                raise ValueError(
+                    f"The symbol is not a present in the list of active symbols for asset_type {self.asset_type}."
+                )
+
+            raise ValueError("No data was found for the symbol: {}".format(symbol))
+
+        return output
+
+    def get_current_rebalance_weight(self, symbol: str) -> dict:
+        """This function returns the current rebalance weight of multi_assets symbol
+
+        Returns
+        -------
+            Weight of the current rebalance of the multi_assets symbol
+            
+            OR
+            
+            ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
+
+        """
+
+        if self.asset_type != AssetType.MULTI_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.MULTI_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "weights" in data:
+            output = data["weights"]
+
+        if output == "" or output is None:
+            raise ValueError("No data was found for the symbol: {}".format(symbol))
+
+        return output
+
+    def get_contributions(self, symbol: str) -> dict:
+        """This function returns the contributions of the single_assets symbol
+
+        Returns
+        -------
+            A dictionary of the contributions of the single_assets symbol
+
+            OR
+
+            ValueError if the symbol is not a present in the list of active symbols for asset_type single_assets
+
+        """
+
+        if self.asset_type != AssetType.SINGLE_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.SINGLE_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "contrib" in data:
+            output = data["contrib"]
+
+        if output == "" or output is None:
+            raise ValueError(
+                f"The symbol {symbol} does not have any contributions associated with it."
+            )
+
+        return output
+
+    def get_previous_rebalance_date(self, symbol: str) -> Union[str, None]:
+        """This function returns the previous rebalance date of multi_assets symbol
+
+        Returns
+        -------
+            Date of the previous rebalance of the multi_assets symbol
+            
+            OR
+            
+            ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
+            
+            OR
+            
+            None if the symbol Rebalance is not scheduled
+
+        """
+
+        if self.asset_type != AssetType.MULTI_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.MULTI_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "previous_rebalance_date" in data:
+            output = data["previous_rebalance_date"]
+
+        return output
+
+    def get_previous_review_date(self, symbol: str) -> Union[str, None]:
+        """This function returns the previous review date of multi_assets symbol
+
+        Returns
+        -------
+            Date of the previous review of the multi_assets symbol
+            
+            OR
+            
+            ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
+            
+            OR
+            
+            None if the symbol Review is not scheduled
+
+        """
+
+        if self.asset_type != AssetType.MULTI_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.MULTI_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "previous_review_date" in data:
+            output = data["previous_review_date"]
+
+        return output
+
+    def get_next_review_date(self, symbol: str) -> Union[str, None]:
+        """This function returns the next review date of multi_assets symbol
+
+        Returns
+        -------
+            Date of the next review of the multi_assets symbol
+            
+            OR
+            
+            ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
+            
+            OR
+            
+            None if the symbol Review is not scheduled
+
+        """
+
+        if self.asset_type != AssetType.MULTI_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.MULTI_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "next_review_date" in data:
+            output = data["next_review_date"]
+
+        return output
+
+    def get_next_rebalance_date(self, symbol: str) -> Union[str, None]:
+        """This function returns the next rebalance date of multi_assets symbol
+
+        Returns
+        -------
+            Date of the next rebalance of the multi_assets symbol
+            
+            OR
+            
+            ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
+            
+            OR
+            
+            None if the symbol Rebalance is not scheduled
+
+        """
+
+        if self.asset_type != AssetType.MULTI_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.MULTI_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "next_rebalance_date" in data:
+            output = data["next_rebalance_date"]
+
+        return output
+
+    def get_next_rebalance_weight(self, symbol: str) -> Union[str, None]:
+        """This function returns the next rebalance weight of multi_assets symbol
+
+        Returns
+        -------
+            Weight of the next rebalance of the multi_assets symbol
+            
+            OR
+            
+            ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
+            
+            OR
+            
+            ValueError if the next rebalance date is in the future
+
+            OR
+
+            None if the symbol Rebalance is not scheduled
+
+        """
+
+        if self.asset_type != AssetType.MULTI_ASSET.value:
+            raise ValueError(
+                f"The asset type must be {AssetType.MULTI_ASSET.value} to use this function"
+            )
+
+        output = ""
+
+        data = self._get_active_asset_data(symbol=symbol)
+
+        if "next_rebalance_weights" in data:
+            output = data["next_rebalance_weights"]
+
+        if output is None:
+
+            if data["next_rebalance_date"] is None:
+                raise ValueError(
+                    "The next rebalance date is not scheduled, therefore the next rebalance weight is not available"
+                )
+
+            reb_date = datetime.strptime(data["next_rebalance_date"], "%Y-%m-%d")
+
+            if reb_date > datetime.utcnow():
+                raise ValueError(
+                    "The next rebalance date is in the future, therefore the next rebalance weight is not available"
+                )
+            else:
+                raise ValueError(
+                    "The next rebalance weight is not available, please contact support"
+                )
+
+        return output
+
 
     def get_data_by_date(self, symbol: str, dates: Union[str, list]) -> dict:
         """This function takes in a symbol and a date and returns a dictionary of the data for that date
@@ -289,19 +583,23 @@ if __name__ == "__main__":
 
     active_symbols = vinter.get_all_active_symbols()
 
-    data = vinter.get_data_by_date(
-        "btc-usd-p-d", ["2022-12-04", "2022-12-09", "2022-12-17"]
-    )
+    get_next_rebalance_date = vinter.get_next_rebalance_date("btc-usd-p-d")
 
-    print(data)
+    print(get_next_rebalance_date)
 
-    all_active_symbol = [asset["symbol"] for asset in vinter.get_all_active_symbols()]
+    # data = vinter.get_data_by_date(
+    #     "btc-usd-p-d", ["2022-12-04", "2022-12-09", "2022-12-17"]
+    # )
 
-    selected_symbol = "btc-usd-p-d"
+    # print(data)
+
+    # all_active_symbol = [asset["symbol"] for asset in vinter.get_all_active_symbols()]
+
+    # selected_symbol = "btc-usd-p-d"
 
 
-    # Get the latest value of the asset
-    data = vinter.get_data_by_date(selected_symbol, ["2022-12-04", "2022-12-09"])
+    # # Get the latest value of the asset
+    # data = vinter.get_data_by_date(selected_symbol, ["2022-12-04", "2022-12-09"])
 
-    for asset in data:
-        print("The price of {} on {} is {}".format(selected_symbol, asset["created_at"], asset["value"]))
+    # for asset in data:
+    #     print("The price of {} on {} is {}".format(selected_symbol, asset["created_at"], asset["value"]))
