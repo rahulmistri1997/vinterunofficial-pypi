@@ -94,7 +94,7 @@ single_assets = VinterAPI(123456, "single_assets")
 
 selected_symbol = "btc-usd-p-r"
 
-single_asset_contribution = single_assets.get_contribution(selected_symbol)
+single_asset_contribution = single_assets.get_contributions(selected_symbol)
 
 print("The contribution of {} is {}".format(selected_symbol, single_asset_contribution))
 
