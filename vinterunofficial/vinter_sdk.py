@@ -532,6 +532,47 @@ class VinterAPI:
                         date
                     )
                 )
+            
+    def get_data_by_time(self, symbol: str, start: str, end: str = None, limit: int = 1000) -> dict:
+        """This function takes in a symbol and a start and end date and returns a dictionary of the data
+        for that period
+
+        Parameters
+        ----------
+        symbol : str
+            The symbol of the asset you want to get data for.
+        start : str
+            The start datatime . format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.sssZ
+        end : str
+            The end datatime. format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.sssZ
+
+        Returns
+        -------
+            A dictionary of the data
+
+        """
+        url = self.get_url_by_asset_type(symbol=symbol)
+
+        params = {"symbol": symbol, "start_time": start, "end_time": end, "limit": limit}
+        headers = {"Authorization": self.api_key}
+        response = requests.get(url, params=params, headers=headers)
+
+        response.raise_for_status() # Raise an exception if the request fails
+
+        data = response.json()["data"]
+
+        if len(data) == 0:
+            if self.valid_symbols is None:
+                self.populate_valid_symbols()
+
+            if symbol not in self.valid_symbols:
+                raise ValueError(
+                    f"The symbol is not a present in the list of active symbols for asset_type {self.asset_type}."
+                )
+                
+            raise ValueError(f"No data was found for the symbol: {symbol} between {start} and {end}.")
+
+        return data
 
     def save_data_to_file(
         self, data: dict, filename: str, file_type: str = "csv", seprator: str = ","

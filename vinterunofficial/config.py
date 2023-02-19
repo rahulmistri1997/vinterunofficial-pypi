@@ -15,10 +15,12 @@ class FrequencyApiType(Enum):
 class AssetType(Enum):
     MULTI_ASSET = "multi_assets"
     SINGLE_ASSET = "single_assets"
+    STAKING_YIELD = "staking_yields"
 
 class ActiveAssetType(Enum):
     MULTI_ASSET = "active_multi_assets"
     SINGLE_ASSET = "active_single_assets"
+    STAKING_YIELD = "active_staking_yields"
 
 class AssetUrl(Enum):
     MULTI_ASSET_REAL_TIME = {
@@ -51,6 +53,11 @@ class AssetUrl(Enum):
         "asset_type": AssetType.SINGLE_ASSET,
         "url": f"{APIBASE}/{AssetType.SINGLE_ASSET.value}_{FrequencyApiType.DAILY.value}",
     }
+    STAKING_YIELD_DAILY = {
+        "frequency": Frequency.DAILY,
+        "asset_type": AssetType.STAKING_YIELD,
+        "url": f"{APIBASE}/{AssetType.STAKING_YIELD.value}_{FrequencyApiType.DAILY.value}",
+    }
     ACTIVE_MULTI_ASSET = {
         "frequency": None,
         "asset_type": AssetType.MULTI_ASSET,
@@ -60,4 +67,9 @@ class AssetUrl(Enum):
         "frequency": None,
         "asset_type": AssetType.SINGLE_ASSET,
         "url": f"{APIBASE}/{ActiveAssetType.SINGLE_ASSET.value}",
+    }
+    ACTIVE_STAKING_YIELD = {
+        "frequency": None,
+        "asset_type": AssetType.STAKING_YIELD,
+        "url": f"{APIBASE}/{ActiveAssetType.STAKING_YIELD.value}",
     }
