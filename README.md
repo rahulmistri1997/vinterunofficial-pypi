@@ -38,6 +38,25 @@ print("The current price of {} is {} at {}".format(selected_symbol, current_pric
 
 ```
 
+### Get Historical Data Between Time Ranges
+```python
+from vinterunofficial import VinterAPI
+
+# vinter = VinterAPI(<APIKEY>, <AssetType>)
+vinter = VinterAPI(123456, "single_assets")
+
+selected_symbol = "btc-usd-p-d"
+
+# Get the latest value of the asset
+data = vinter.get_data_by_time(symbol=selected_symbol, start="2023-01-01T00:00:00Z", end="2023-01-05T23:59:59Z")
+# The returned data is a list of dictionaries as shown in the sample response in the documentation
+# You can also increase the limit default is 1000, Max is 2000.
+# The returned order will be from oldest to latest so that its easier to loop through start time to get historical data in a paginated api responses.
+
+print(f"The Response : {data}")
+
+```
+
 ### If you just want the latest value
 ```python
 from vinterunofficial import VinterAPI
@@ -54,22 +73,6 @@ print("The current price of {} is {}".format(selected_symbol, current_price))
 
 ```
 
-### Get Historical Data (Only Daily Supported)
-```python
-from vinterunofficial import VinterAPI
-
-# vinter = VinterAPI(<APIKEY>, <AssetType>)
-vinter = VinterAPI(123456, "single_assets")
-
-selected_symbol = "btc-usd-p-d"
-
-# Get the latest value of the asset
-data = vinter.get_data_by_date(selected_symbol, ["2022-12-04", "2022-12-09"])
-
-for asset in data:
-    print("The price of {} on {} is {}".format(selected_symbol, asset["created_at"], asset["value"]))
-
-```
 
 ### Get All Active Symbols
 ```python
