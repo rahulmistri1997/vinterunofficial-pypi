@@ -84,7 +84,7 @@ class AssetUrl(Enum):
         "frequency": None,
         "asset_type": AssetType.STAKING_YIELD,
         "url": f"{APIBASE}/{ActiveAssetType.STAKING_YIELD.value}",
-    },
+    }
     ACTIVE_NAV = {
         "frequency": None,
         "asset_type": AssetType.NAV,
