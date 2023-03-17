@@ -17,6 +17,7 @@ pip install vinterunofficial
 - single_assets
 - multi_assets
 - staking_yields
+- nav
 
 ### Get Latest Data
 ```python
