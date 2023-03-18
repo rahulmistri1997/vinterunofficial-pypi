@@ -8,7 +8,7 @@ setup(
 	description="This is a unofficial wrapper for Vinter.co API",
 	long_description=long_description,
 	long_description_content_type='text/markdown',
-	install_requires=["requests==2.28.1"],
+	install_requires=["httpx==0.23.3"],
 	author="Rahul Mistri",
 	author_email="rahulmistri1997@gmail.com",
 	packages=find_packages(),

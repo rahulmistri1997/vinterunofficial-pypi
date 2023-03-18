@@ -19,6 +19,20 @@ pip install vinterunofficial
 - staking_yields
 - nav
 
+## Important Notes About the Library
+- The library supports both synchronous and asynchronous requests.
+- The library is still in development and may have bugs.
+- All the methods are documented in the source code.
+- All the methods are callable from both the synchronous and asynchronous classes.
+- The asynchronous class is called VinterAPIAsync.
+- The synchronous class is called VinterAPI.
+- The asynchronous class repeats the same methods as the synchronous class, but can be called with the await keyword.
+
+## Importing the library
+```python
+from vinterunofficial import VinterAPI, VinterAPIAsync
+```
+
 ### Get Latest Data
 ```python
 from vinterunofficial import VinterAPI
