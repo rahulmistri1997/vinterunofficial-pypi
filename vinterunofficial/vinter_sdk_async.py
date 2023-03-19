@@ -1,16 +1,14 @@
 import os
+import httpx
 import csv
 import json
-import httpx
 from typing import Union
-from datetime import datetime, timedelta
+from datetime import datetime
 from .config import Frequency, AssetType, AssetUrl
 from .utils import VinterValidation, VinterUrl
 from .vinter_abc import VinterAPIABC
 
-APIKEY = os.environ.get("VINTER_API_KEY", None)
-
-class VinterAPI(VinterAPIABC):
+class VinterAPIAsync(VinterAPIABC):
     def __init__(self, api_key: str, asset_type: str):
         """This function takes in an api_key and asset_type and sets them as attributes of the class
 
@@ -26,9 +24,9 @@ class VinterAPI(VinterAPIABC):
         self.frequencies = [frequency.value for frequency in Frequency]
         self.valid_asset_types = [asset_type.value for asset_type in AssetType]
         VinterValidation.validate_asset_type(self.asset_type)
-        self.httpx_client = httpx.Client(follow_redirects=True)
+        self.httpx_client = httpx.AsyncClient(follow_redirects=True)
 
-    def get_all_active_symbols(self, frequency: str = None, symbol_only: bool = False) -> Union[list, dict]:
+    async def get_all_active_symbols(self, frequency: str = None, symbol_only: bool = False) -> Union[list, dict]:
         """This function returns a dictionary of all the active symbols
 
         Returns
@@ -38,7 +36,7 @@ class VinterAPI(VinterAPIABC):
         """
         url = VinterUrl.get_active_url(self.asset_type)
         headers = {}
-        response = self.httpx_client.get(url, headers=headers)
+        response = await self.httpx_client.get(url, headers=headers)
 
         response.raise_for_status() # Raise an exception if the request failed
 
@@ -75,7 +73,7 @@ class VinterAPI(VinterAPIABC):
 
         return url
 
-    def get_latest_data(self, symbol: str, limit: int = 1) -> dict:
+    async def get_latest_data(self, symbol: str, limit: int = 1) -> dict:
         """It takes a symbol and a limit as parameters, and returns a dictionary of the latest data for
         that symbol
 
@@ -95,7 +93,7 @@ class VinterAPI(VinterAPIABC):
 
         params = {"symbol": symbol, "limit": limit}
         headers = {"Authorization": self.api_key}
-        response = self.httpx_client.get(url, params=params, headers=headers)
+        response = await self.httpx_client.get(url, params=params, headers=headers)
 
         response.raise_for_status()
 
@@ -106,7 +104,7 @@ class VinterAPI(VinterAPIABC):
 
         return data
 
-    def get_latest_value(self, symbol: str) -> float:
+    async def get_latest_value(self, symbol: str) -> float:
         """This function takes in a symbol and returns the latest value for that symbol
 
         Parameters
@@ -119,7 +117,7 @@ class VinterAPI(VinterAPIABC):
             The latest value for the symbol
 
         """
-        data = self.get_latest_data(symbol=symbol)
+        data = await self.get_latest_data(symbol=symbol)
         return data[0]["value"]
     
     def _filter_by_symbol(self, data: list, symbol: str) -> list:
@@ -139,7 +137,7 @@ class VinterAPI(VinterAPIABC):
         """
         return [asset for asset in data if asset["symbol"] == symbol]
 
-    def _get_active_asset_data(self, symbol: str) -> dict:
+    async def _get_active_asset_data(self, symbol: str) -> dict:
         """This function returns the data for the active asset
 
         Parameters
@@ -155,7 +153,7 @@ class VinterAPI(VinterAPIABC):
 
         symbol, frequency = VinterValidation.validate_symbol_frequency(symbol)
         
-        data = self.get_all_active_symbols()
+        data = await self.get_all_active_symbols()
 
         output = self._filter_by_symbol(data=data, symbol=symbol)
 
@@ -164,7 +162,7 @@ class VinterAPI(VinterAPIABC):
 
         return output[0]
 
-    def get_current_rebalance_weight(self, symbol: str) -> dict:
+    async def get_current_rebalance_weight(self, symbol: str) -> dict:
         """This function returns the current rebalance weight of multi_assets symbol
 
         Returns
@@ -184,7 +182,7 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("weights", None)
 
@@ -193,7 +191,7 @@ class VinterAPI(VinterAPIABC):
         
         return output
 
-    def get_contributions(self, symbol: str) -> dict:
+    async def get_contributions(self, symbol: str) -> dict:
         """This function returns the contributions of the single_assets symbol
 
         Returns
@@ -213,7 +211,7 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("contributions", None)
 
@@ -224,7 +222,7 @@ class VinterAPI(VinterAPIABC):
 
         return output
 
-    def get_previous_rebalance_date(self, symbol: str) -> Union[str, None]:
+    async def get_previous_rebalance_date(self, symbol: str) -> Union[str, None]:
         """This function returns the previous rebalance date of multi_assets symbol
 
         Returns
@@ -248,13 +246,13 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("previous_rebalance_date", None)
 
         return output
 
-    def get_previous_review_date(self, symbol: str) -> Union[str, None]:
+    async def get_previous_review_date(self, symbol: str) -> Union[str, None]:
         """This function returns the previous review date of multi_assets symbol
 
         Returns
@@ -278,13 +276,13 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("previous_review_date", None)
 
         return output
 
-    def get_next_review_date(self, symbol: str) -> Union[str, None]:
+    async def get_next_review_date(self, symbol: str) -> Union[str, None]:
         """This function returns the next review date of multi_assets symbol
 
         Returns
@@ -308,13 +306,13 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("next_review_date", None)
 
         return output
 
-    def get_next_rebalance_date(self, symbol: str) -> Union[str, None]:
+    async def get_next_rebalance_date(self, symbol: str) -> Union[str, None]:
         """This function returns the next rebalance date of multi_assets symbol
 
         Returns
@@ -338,13 +336,13 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("next_rebalance_date", None)
 
         return output
 
-    def get_next_rebalance_weight(self, symbol: str) -> Union[str, None]:
+    async def get_next_rebalance_weight(self, symbol: str) -> Union[str, None]:
         """This function returns the next rebalance weight of multi_assets symbol
 
         Returns
@@ -368,14 +366,14 @@ class VinterAPI(VinterAPIABC):
 
         output = ""
 
-        data = self._get_active_asset_data(symbol=symbol)
+        data = await self._get_active_asset_data(symbol=symbol)
 
         output = data.get("next_rebalance_weights", None)
 
         return output
 
 
-    def get_data_by_date(self, symbol: str, dates: Union[str, list]) -> dict:
+    async def get_data_by_date(self, symbol: str, dates: Union[str, list]) -> dict:
         """This function takes in a symbol and a date and returns a dictionary of the data for that date
 
         This function is only for daily data.
@@ -411,11 +409,11 @@ class VinterAPI(VinterAPIABC):
         # Converting the datetime object to string
         last_date = last_date.strftime("%Y-%m-%d")
 
-        data = self.get_data_by_time(symbol=symbol, start=start_date, end=last_date)
+        data = await self.get_data_by_time(symbol=symbol, start=start_date, end=last_date)
 
         return data
            
-    def get_data_by_time(self, symbol: str, start: str, end: str = None, limit: int = 1000) -> dict:
+    async def get_data_by_time(self, symbol: str, start: str, end: str = None, limit: int = 1000) -> dict:
         """This function takes in a symbol and a start and end date and returns a dictionary of the data
         for that period
 
@@ -437,7 +435,7 @@ class VinterAPI(VinterAPIABC):
 
         params = {"symbol": symbol, "start_time": start, "end_time": end, "limit": limit}
         headers = {"Authorization": self.api_key}
-        response = self.httpx_client.get(url, params=params, headers=headers)
+        response = await self.httpx_client.get(url, params=params, headers=headers)
 
         response.raise_for_status() # Raise an exception if the request fails
 
@@ -491,30 +489,3 @@ class VinterAPI(VinterAPIABC):
                     csv.DictWriter(
                         f, row.keys(), delimiter=seprator, lineterminator="\n"
                     ).writerow(row)
-
-
-if __name__ == "__main__":
-    vinter = VinterAPI(APIKEY, "single_assets")
-
-    active_symbols = vinter.get_all_active_symbols()
-
-    get_next_rebalance_date = vinter.get_next_rebalance_date("btc-usd-p-d")
-
-    print(get_next_rebalance_date)
-
-    # data = vinter.get_data_by_date(
-    #     "btc-usd-p-d", ["2022-12-04", "2022-12-09", "2022-12-17"]
-    # )
-
-    # print(data)
-
-    # all_active_symbol = [asset["symbol"] for asset in vinter.get_all_active_symbols()]
-
-    # selected_symbol = "btc-usd-p-d"
-
-
-    # # Get the latest value of the asset
-    # data = vinter.get_data_by_date(selected_symbol, ["2022-12-04", "2022-12-09"])
-
-    # for asset in data:
-    #     print("The price of {} on {} is {}".format(selected_symbol, asset["created_at"], asset["value"]))

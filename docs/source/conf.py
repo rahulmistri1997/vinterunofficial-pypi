@@ -23,7 +23,8 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon'
 
 templates_path = ['_templates']
 exclude_patterns = []
-
+# Exclude setup.py from the documentation
+exclude_patterns.append('setup.py')
 
 
 # -- Options for HTML output -------------------------------------------------

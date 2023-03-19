@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "==2.28.1"
 build = "*"
+httpx = "*"
 
 [dev-packages]
 ipykernel = "*"
