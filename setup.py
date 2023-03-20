@@ -4,7 +4,7 @@ long_description = open('README.md').read()
 
 setup(
 	name="vinterunofficial",
-	version="0.1.1",
+	version="0.1.2",
 	description="This is a unofficial wrapper for Vinter.co API",
 	long_description=long_description,
 	long_description_content_type='text/markdown',

@@ -26,7 +26,7 @@ class VinterAPI(VinterAPIABC):
         self.frequencies = [frequency.value for frequency in Frequency]
         self.valid_asset_types = [asset_type.value for asset_type in AssetType]
         VinterValidation.validate_asset_type(self.asset_type)
-        self.httpx_client = httpx.Client(follow_redirects=True)
+        self.httpx_client = httpx.Client(follow_redirects=True, timeout=10)
 
     def get_all_active_symbols(self, frequency: str = None, symbol_only: bool = False) -> Union[list, dict]:
         """This function returns a dictionary of all the active symbols
