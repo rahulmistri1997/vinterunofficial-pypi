@@ -10,9 +10,10 @@ Welcome to vinterunofficial's documentation!
     :members:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
+   vinterunofficial
 
 Indices and tables
 ==================
