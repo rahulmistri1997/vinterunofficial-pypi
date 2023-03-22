@@ -6,3 +6,4 @@ vinterunofficial-pypi
 
    setup
    vinterunofficial
+   tests
