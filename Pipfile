@@ -7,9 +7,12 @@ name = "pypi"
 requests = "==2.28.1"
 build = "*"
 httpx = "*"
+pytest = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 ipykernel = "*"
+black = "*"
 
 [requires]
 python_version = "3.9"
