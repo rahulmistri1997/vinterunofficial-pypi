@@ -35,6 +35,11 @@ class AssetUrl(Enum):
         "asset_type": AssetType.SINGLE_ASSET,
         "url": f"{APIBASE}/{AssetType.SINGLE_ASSET.value}_{FrequencyApiType.REAL_TIME.value}",
     }
+    NAV_REAL_TIME = {
+        "frequency": Frequency.REAL_TIME,
+        "asset_type": AssetType.NAV,
+        "url": f"{APIBASE}/{AssetType.NAV.value}_{FrequencyApiType.REAL_TIME.value}",
+    }
     MULTI_ASSET_HOURLY = {
         "frequency": Frequency.HOURLY,
         "asset_type": AssetType.MULTI_ASSET,

@@ -4,7 +4,7 @@ from typing import Union
 class VinterAPIABC(ABC):
     
     @abstractmethod
-    def __init__(self, api_key: str, asset_type: str):
+    def __init__(self, api_key: str, asset_type: str): # pragma: no cover
         """This function takes in an api_key and asset_type and sets them as attributes of the class
 
         Parameters
@@ -17,7 +17,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_all_active_symbols(self, frequency: str = None, symbol_only: bool = False) -> Union[list, dict]:
+    def get_all_active_symbols(self, frequency: str = None, symbol_only: bool = False) -> Union[list, dict]: # pragma: no cover
         """This function returns a dictionary of all the active symbols
 
         Returns
@@ -27,24 +27,9 @@ class VinterAPIABC(ABC):
         """
         pass
 
-    @abstractmethod
-    def _get_url_by_asset_type(self, symbol: str) -> str:
-        """This function takes in a symbol and returns the url to use to get the data
-
-        Parameters
-        ----------
-        symbol : str
-            The symbol of the asset you want to get data for.
-
-        Returns
-        -------
-            The url to use to get the data
-
-        """
-        pass
 
     @abstractmethod
-    def get_latest_data(self, symbol: str, limit: int = 1) -> dict:
+    def get_latest_data(self, symbol: str, limit: int = 1) -> dict: # pragma: no cover
         """It takes a symbol and a limit as parameters, and returns a dictionary of the latest data for
         that symbol
 
@@ -63,7 +48,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_latest_value(self, symbol: str) -> float:
+    def get_latest_value(self, symbol: str) -> float: # pragma: no cover
         """This function takes in a symbol and returns the latest value for that symbol
 
         Parameters
@@ -79,7 +64,7 @@ class VinterAPIABC(ABC):
         pass
     
     @abstractmethod
-    def _filter_by_symbol(self, data: list, symbol: str) -> list:
+    def _filter_by_symbol(self, data: list, symbol: str) -> list: # pragma: no cover
         """This function takes in a list of data and a symbol and returns a list of data for that symbol
 
         Parameters
@@ -97,7 +82,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def _get_active_asset_data(self, symbol: str) -> dict:
+    def _get_active_asset_data(self, symbol: str) -> dict: # pragma: no cover
         """This function returns the data for the active asset
 
         Parameters
@@ -113,7 +98,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_current_rebalance_weight(self, symbol: str) -> dict:
+    def get_current_rebalance_weight(self, symbol: str) -> dict: # pragma: no cover
         """This function returns the current rebalance weight of multi_assets symbol
 
         Returns
@@ -128,7 +113,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_contributions(self, symbol: str) -> dict:
+    def get_contributions(self, symbol: str) -> dict: # pragma: no cover
         """This function returns the contributions of the single_assets symbol
 
         Returns
@@ -143,7 +128,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_previous_rebalance_date(self, symbol: str) -> Union[str, None]:
+    def get_previous_rebalance_date(self, symbol: str) -> Union[str, None]: # pragma: no cover
         """This function returns the previous rebalance date of multi_assets symbol
 
         Returns
@@ -162,7 +147,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_previous_review_date(self, symbol: str) -> Union[str, None]:
+    def get_previous_review_date(self, symbol: str) -> Union[str, None]: # pragma: no cover
         """This function returns the previous review date of multi_assets symbol
 
         Returns
@@ -181,7 +166,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_next_review_date(self, symbol: str) -> Union[str, None]:
+    def get_next_review_date(self, symbol: str) -> Union[str, None]: # pragma: no cover
         """This function returns the next review date of multi_assets symbol
 
         Returns
@@ -200,7 +185,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_next_rebalance_date(self, symbol: str) -> Union[str, None]:
+    def get_next_rebalance_date(self, symbol: str) -> Union[str, None]: # pragma: no cover
         """This function returns the next rebalance date of multi_assets symbol
 
         Returns
@@ -219,7 +204,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_next_rebalance_weight(self, symbol: str) -> Union[str, None]:
+    def get_next_rebalance_weight(self, symbol: str) -> Union[str, None]: # pragma: no cover
         """This function returns the next rebalance weight of multi_assets symbol
 
         Returns
@@ -238,7 +223,7 @@ class VinterAPIABC(ABC):
         pass
 
     @abstractmethod
-    def get_data_by_date(self, symbol: str, dates: Union[str, list]) -> dict:
+    def get_data_by_date(self, symbol: str, dates: Union[str, list]) -> dict: # pragma: no cover
         """This function takes in a symbol and a date and returns a dictionary of the data for that date
 
         This function is only for daily data.
@@ -258,7 +243,7 @@ class VinterAPIABC(ABC):
         pass
            
     @abstractmethod
-    def get_data_by_time(self, symbol: str, start: str, end: str = None, limit: int = 1000) -> dict:
+    def get_data_by_time(self, symbol: str, start: str, end: str = None, limit: int = 1000) -> dict: # pragma: no cover
         """This function takes in a symbol and a start and end date and returns a dictionary of the data
         for that period
 

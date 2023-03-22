@@ -55,25 +55,6 @@ class VinterAPI(VinterAPIABC):
 
         return data
 
-    def _get_url_by_asset_type(self, symbol: str) -> str:
-        """This function takes in a symbol and returns the url to use to get the data
-
-        Parameters
-        ----------
-        symbol : str
-            The symbol of the asset you want to get data for.
-
-        Returns
-        -------
-            The url to use to get the data
-
-        """
-
-        symbol, frequency = VinterValidation.validate_symbol_frequency(symbol)
-
-        url = VinterUrl.get_url(self.asset_type, frequency=frequency)
-
-        return url
 
     def get_latest_data(self, symbol: str, limit: int = 1) -> dict:
         """It takes a symbol and a limit as parameters, and returns a dictionary of the latest data for
