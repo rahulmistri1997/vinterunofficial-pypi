@@ -8,7 +8,6 @@ version = "0.1.3rc3"
 
 [metadata]
 description = "This is a unofficial wrapper for Vinter.co API"
-long_description = "This is a unofficial wrapper for Vinter.co API"
 readme = 'README.md'
 author = "Rahul Mistri"
 author_email = "rahulmistri1997@gmail.com"
