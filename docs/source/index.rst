@@ -11,7 +11,14 @@ Welcome to vinterunofficial's documentation!
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
+   :caption: Guide:
+
+   readme_link
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Library:
 
    vinterunofficial
 

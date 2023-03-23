@@ -9,6 +9,7 @@ build = "*"
 httpx = "*"
 pytest = "*"
 pytest-asyncio = "*"
+myst-parser = "==1.0.0"
 
 [dev-packages]
 ipykernel = "*"
