@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 name = "vinterunofficial"
-version = "0.1.3rc1"
+version = "0.1.3rc2"
 description = "This is a unofficial wrapper for Vinter.co API"
 long_description = '''
 This is a unofficial wrapper for Vinter.co API
