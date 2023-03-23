@@ -2,9 +2,11 @@
 requires = ["setuptools>=38.6.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
+[project]
 name = "vinterunofficial"
-version = "0.1.3rc2"
+version = "0.1.3rc3"
+
+[metadata]
 description = "This is a unofficial wrapper for Vinter.co API"
 long_description = '''
 This is a unofficial wrapper for Vinter.co API
@@ -13,7 +15,9 @@ readme = 'README.md'
 long_description_content_type = "text/markdown"
 author = "Rahul Mistri"
 author_email = "rahulmistri1997@gmail.com"
-packages = find:
+
+[tool.setuptools]
+packages = ["vinterunofficial"]
 
 [project.urls]
 homepage = 'https://rahulmistri1997.github.io/vinterunofficial-pypi'
