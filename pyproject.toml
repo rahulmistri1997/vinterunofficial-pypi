@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vinterunofficial"
-version = "0.1.4"
+version = "0.1.5"
+dependencies = ["httpx==0.23.3", "websocket-client==1.5.1"]
 
 [project.readme]
 file = "README.md"
@@ -25,4 +26,3 @@ repository = 'https://github.com/rahulmistri1997/vinterunofficial-pypi'
 
 [options]
 python_requires = ">=3.7"
-install_requires = ["httpx==0.23.3", "websocket-client==1.5.1"]
