@@ -1,5 +1,5 @@
 from datetime import datetime
-from .config import Frequency, AssetType, AssetUrl
+from .config import Frequency, AssetType, AssetUrl, WsAssetType, WsAssetUrl
 
 class VinterValidation:
     
@@ -124,6 +124,8 @@ class VinterUrl:
             The url is being returned.
         
         '''
+
+        asset_types = [asset_type.value for asset_type in AssetType]
         
         url = None
         for asset_url in AssetUrl:
@@ -136,7 +138,7 @@ class VinterUrl:
 
         if url is None:
             raise ValueError(
-                f"The asset type must be in {asset_type}"
+                f"The asset type must be in {asset_types}"
             )
         
         return url
@@ -160,5 +162,47 @@ class VinterUrl:
         
         symbol, frequency = VinterValidation.validate_symbol_frequency(symbol)
         url = VinterUrl.get_url(asset_type=asset_type, frequency=frequency)
+        
+        return url
+    
+    @staticmethod
+    def websocket_url(asset_type: str, symbol: str = None) -> str:
+        '''It takes in an asset type and a frequency and returns a websocket url
+        
+        Parameters
+        ----------
+        asset_type : str
+            str
+        frequency : str
+            str = None
+        
+        Returns
+        -------
+            The websocket url is being returned.
+        
+        '''
+
+        ws_asset_types = [asset_type.value for asset_type in WsAssetType]
+
+        if symbol is None:
+            raise ValueError(
+                "The symbol must be provided."
+            )
+        
+        symbol, frequency = VinterValidation.validate_symbol_frequency(symbol)
+        
+        url = None
+        for asset_url in WsAssetUrl:
+            if (
+                asset_url.value["asset_type"].value == asset_type
+            ):
+                url = asset_url.value["url"]
+                url = url + "/" + symbol
+                break
+
+        if url is None:
+            raise ValueError(
+                f"The asset type must be in {ws_asset_types}"
+            )
         
         return url

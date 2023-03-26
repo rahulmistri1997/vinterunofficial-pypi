@@ -44,6 +44,14 @@ vinterunofficial.vinter\_sdk\_async module
    :undoc-members:
    :show-inheritance:
 
+vinterunofficial.vinter\_sdk\_ws module
+---------------------------------------
+
+.. automodule:: vinterunofficial.vinter_sdk_ws
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
