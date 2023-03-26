@@ -4,3 +4,6 @@ test:
 install:
 	pip install --upgrade pip &&\
 		python -m pip install -r requirements.txt
+
+doc:
+	cd docs && make html

@@ -1,6 +1,26 @@
 from enum import Enum
 
 APIBASE = "https://www.vinterapi.com/api/v3"
+WSBASE = "wss://www.vinterapi.com/ws"
+
+class WsAssetType(Enum):
+    MULTI_ASSET = "multi_assets"
+    SINGLE_ASSET = "single_assets"
+    NAV = "nav"
+
+class WsAssetUrl(Enum):
+    MULTI_ASSET = {
+        "asset_type": WsAssetType.MULTI_ASSET,
+        "url": f"{WSBASE}/{WsAssetType.MULTI_ASSET.value.replace('_', '')}",
+    }
+    SINGLE_ASSET = {
+        "asset_type": WsAssetType.SINGLE_ASSET,
+        "url": f"{WSBASE}/{WsAssetType.SINGLE_ASSET.value.replace('_', '')}",
+    }
+    NAV = {
+        "asset_type": WsAssetType.NAV,
+        "url": f"{WSBASE}/{WsAssetType.NAV.value}",
+    }
 
 class Frequency(Enum):
     REAL_TIME = "r"

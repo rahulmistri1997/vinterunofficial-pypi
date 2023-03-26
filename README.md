@@ -13,10 +13,15 @@ pip install vinterunofficial
 
 ## Usage
 
-## Valid AssetType
+## Valid AssetType API
 - single_assets
 - multi_assets
 - staking_yields
+- nav
+
+## Valid AssetType Websocket
+- single_assets
+- multi_assets
 - nav
 
 ## Important Notes About the Library
@@ -38,7 +43,7 @@ from vinterunofficial import VinterAPI, VinterAPIAsync
 from vinterunofficial import VinterAPI
 
 # vinter = VinterAPI(<APIKEY>, <AssetType>)
-vinter = VinterAPI(123456, "single_assets")
+vinter = VinterAPI("<APIKey>", "single_assets")
 
 selected_symbol = "btc-usd-p-d"
 
@@ -59,7 +64,7 @@ print("The current price of {} is {} at {}".format(selected_symbol, current_pric
 from vinterunofficial import VinterAPI
 
 # vinter = VinterAPI(<APIKEY>, <AssetType>)
-vinter = VinterAPI(123456, "single_assets")
+vinter = VinterAPI("<APIKey>", "single_assets")
 
 selected_symbol = "btc-usd-p-d"
 
@@ -77,7 +82,7 @@ print(f"The Response : {data}")
 ```python
 from vinterunofficial import VinterAPI
 
-vinter = VinterAPI(123456, "single_assets")
+vinter = VinterAPI("<APIKey>", "single_assets")
 
 selected_symbol = "btc-usd-p-d"
 
@@ -94,8 +99,8 @@ print("The current price of {} is {}".format(selected_symbol, current_price))
 ```python
 from vinterunofficial import VinterAPI
 
-single_assets = VinterAPI(123456, "single_assets")
-multi_assets = VinterAPI(123456, "multi_assets")
+single_assets = VinterAPI("<APIKey>", "single_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 all_active_symbol_multi = [asset["symbol"] for asset in multi_assets.get_all_active_symbols()]
 all_active_symbol_single = [asset["symbol"] for asset in single_assets.get_all_active_symbols()]
@@ -109,7 +114,7 @@ print("All active symbols for single assets: {}".format(all_active_symbol_single
 ```python
 from vinterunofficial import VinterAPI
 
-single_assets = VinterAPI(123456, "single_assets")
+single_assets = VinterAPI("<APIKey>", "single_assets")
 
 selected_symbol = "btc-usd-p-r"
 
@@ -123,7 +128,7 @@ print("The contribution of {} is {}".format(selected_symbol, single_asset_contri
 ```python
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI(123456, "multi_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -137,7 +142,7 @@ print("The weight of {} is {}".format(selected_symbol, multi_asset_weight))
 ```python
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI(123456, "multi_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -151,7 +156,7 @@ print("The next rebalance date of {} is {}".format(selected_symbol, next_rebalan
 ```python
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI(123456, "multi_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -166,7 +171,7 @@ print("The previous rebalance date of {} is {}".format(selected_symbol, previous
 
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI(123456, "multi_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -181,7 +186,7 @@ print("The next review date of {} is {}".format(selected_symbol, next_review_dat
 
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI(123456, "multi_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -196,12 +201,44 @@ print("The previous review date of {} is {}".format(selected_symbol, previous_re
 
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI(123456, "multi_assets")
+multi_assets = VinterAPI("<APIKey>", "multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
 next_rebalance_weight = multi_assets.get_next_rebalance_weight(selected_symbol)
 
 print("The next rebalance weight of {} is {}".format(selected_symbol, next_rebalance_weight))
+
+```
+
+### Websocket
+```python
+from vinterunofficial import VinterAPIWS
+
+def on_message(ws, message):
+    print(message)
+    
+    #ws.close() # Uncomment this line to close the websocket after receiving a message
+
+def on_error(ws, error):
+    print(error)
+
+def on_close(ws, close_status_code, close_msg):
+    print("### closed ###")
+    print(f"close_status_code: {close_status_code} close_msg: {close_msg}")
+
+def on_open(ws):
+    print("### open ###")
+
+vinter_ws = VinterAPIWS(
+    symbol="btc-usd-p-r",
+    token="<APIKey>",
+    asset_type="singleassets",
+    on_message=on_message,
+    on_error=on_error,
+    on_close=on_close,
+    on_open=on_open,
+)
+vinter_ws.open()
 
 ```
