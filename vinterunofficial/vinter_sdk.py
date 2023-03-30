@@ -196,7 +196,7 @@ class VinterAPI(VinterAPIABC):
 
         data = self._get_active_asset_data(symbol=symbol)
 
-        output = data.get("contributions", None)
+        output = data.get("contrib", None)
 
         if output == "" or output is None:
             raise ValueError(
@@ -431,7 +431,7 @@ class VinterAPI(VinterAPIABC):
 
     def save_data_to_file(
         self, data: dict, filename: str, file_type: str = "csv", seprator: str = ","
-    ) -> None:
+    ) -> None: # pragma: no cover
         """This function takes in a dictionary of data and a filename and saves the data to a csv file
 
         Parameters
@@ -474,28 +474,3 @@ class VinterAPI(VinterAPIABC):
                     ).writerow(row)
 
 
-if __name__ == "__main__":
-    vinter = VinterAPI(APIKEY, "single_assets")
-
-    active_symbols = vinter.get_all_active_symbols()
-
-    get_next_rebalance_date = vinter.get_next_rebalance_date("btc-usd-p-d")
-
-    print(get_next_rebalance_date)
-
-    # data = vinter.get_data_by_date(
-    #     "btc-usd-p-d", ["2022-12-04", "2022-12-09", "2022-12-17"]
-    # )
-
-    # print(data)
-
-    # all_active_symbol = [asset["symbol"] for asset in vinter.get_all_active_symbols()]
-
-    # selected_symbol = "btc-usd-p-d"
-
-
-    # # Get the latest value of the asset
-    # data = vinter.get_data_by_date(selected_symbol, ["2022-12-04", "2022-12-09"])
-
-    # for asset in data:
-    #     print("The price of {} on {} is {}".format(selected_symbol, asset["created_at"], asset["value"]))

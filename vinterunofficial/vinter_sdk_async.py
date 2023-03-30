@@ -3,7 +3,7 @@ import httpx
 import csv
 import json
 from typing import Union
-from datetime import datetime
+from datetime import datetime, timedelta
 from .config import Frequency, AssetType, AssetUrl
 from .utils import VinterValidation, VinterUrl
 from .vinter_abc import VinterAPIABC
@@ -194,7 +194,7 @@ class VinterAPIAsync(VinterAPIABC):
 
         data = await self._get_active_asset_data(symbol=symbol)
 
-        output = data.get("contributions", None)
+        output = data.get("contrib", None)
 
         if output == "" or output is None:
             raise ValueError(
@@ -429,7 +429,7 @@ class VinterAPIAsync(VinterAPIABC):
 
     def save_data_to_file(
         self, data: dict, filename: str, file_type: str = "csv", seprator: str = ","
-    ) -> None:
+    ) -> None: # pragma: no cover
         """This function takes in a dictionary of data and a filename and saves the data to a csv file
 
         Parameters

@@ -1,4 +1,5 @@
 # Unofficial Wrapper for the Vinter API
+![Code Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)
 
 This is an unofficial wrapper for the Vinter API. It is not affiliated with Vinter in any way.
 

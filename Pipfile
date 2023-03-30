@@ -10,6 +10,7 @@ httpx = "*"
 pytest = "*"
 pytest-asyncio = "*"
 myst-parser = "==1.0.0"
+readme-coverage-badger = "*"
 
 [dev-packages]
 ipykernel = "*"

@@ -1,5 +1,10 @@
 test:
-	pytest -v --cov=vinterunofficial --disable-pytest-warnings
+	pytest -v --cov=vinterunofficial --disable-pytest-warnings &&\
+		readme-cov
+
+testhtml:
+	pytest -v --cov=vinterunofficial --cov-report=html --disable-pytest-warnings &&\
+		readme-cov
 
 install:
 	pip install --upgrade pip &&\

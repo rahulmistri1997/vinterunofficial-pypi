@@ -120,3 +120,33 @@ def test_get_url_by_symbol():
 
     url = VinterUrl.get_url_by_symbol(asset_type, symbol)
     assert url == f"https://www.vinterapi.com/api/v3/single_assets_daily"
+
+def test_get_websocket_url():
+    '''> Given an asset type and a symbol, return the url for the corresponding websocket endpoint
+    
+    '''
+    asset_type = "single_assets"
+    symbol = "btc-usd-p-d"
+
+    url = VinterUrl.websocket_url(asset_type, symbol)
+    assert url == f"wss://www.vinterapi.com/ws/singleassets/{symbol}"
+
+def test_get_websocket_url_invalid_asset_type():
+    '''It tests that the function `get_websocket_url` raises a `ValueError` when an invalid asset type is
+    passed to it
+    
+    '''
+    asset_type = "invalid_asset_type"
+    symbol = "btc-usd-p-d"
+    with pytest.raises(ValueError):
+        VinterUrl.websocket_url(asset_type, symbol)
+
+def test_get_websocket_url_no_symbol():
+    '''It tests that the function `get_websocket_url` raises a `ValueError` when no symbol is passed to
+    it
+    
+    '''
+    asset_type = "single_assets"
+    symbol = None
+    with pytest.raises(ValueError):
+        VinterUrl.websocket_url(asset_type, symbol)
