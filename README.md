@@ -234,7 +234,7 @@ def on_open(ws):
 vinter_ws = VinterAPIWS(
     symbol="btc-usd-p-r",
     token="<APIKey>",
-    asset_type="singleassets",
+    asset_type="single_assets",
     on_message=on_message,
     on_error=on_error,
     on_close=on_close,
