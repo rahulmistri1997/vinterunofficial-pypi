@@ -10,6 +10,7 @@ from .vinter_abc import VinterAPIABC
 
 APIKEY = os.environ.get("VINTER_API_KEY", None)
 
+
 class VinterAPI(VinterAPIABC):
     def __init__(self, api_key: str, asset_type: str):
         """This function takes in an api_key and asset_type and sets them as attributes of the class
@@ -28,7 +29,9 @@ class VinterAPI(VinterAPIABC):
         VinterValidation.validate_asset_type(self.asset_type)
         self.httpx_client = httpx.Client(follow_redirects=True, timeout=10)
 
-    def get_all_active_symbols(self, frequency: str = None, symbol_only: bool = False) -> Union[list, dict]:
+    def get_all_active_symbols(
+        self, frequency: str = None, symbol_only: bool = False
+    ) -> Union[list, dict]:
         """This function returns a dictionary of all the active symbols
 
         Returns
@@ -40,21 +43,21 @@ class VinterAPI(VinterAPIABC):
         headers = {}
         response = self.httpx_client.get(url, headers=headers)
 
-        response.raise_for_status() # Raise an exception if the request failed
+        response.raise_for_status()  # Raise an exception if the request failed
 
         data = response.json()["data"]
 
         if frequency is not None:
-
             VinterValidation.validate_frequency(frequency)
 
-            data = [asset for asset in data if asset['symbol'].split('-')[-1] == frequency]
+            data = [
+                asset for asset in data if asset["symbol"].split("-")[-1] == frequency
+            ]
 
         if symbol_only:
             data = [asset["symbol"] for asset in data]
 
         return data
-
 
     def get_latest_data(self, symbol: str, limit: int = 1) -> dict:
         """It takes a symbol and a limit as parameters, and returns a dictionary of the latest data for
@@ -102,7 +105,7 @@ class VinterAPI(VinterAPIABC):
         """
         data = self.get_latest_data(symbol=symbol)
         return data[0]["value"]
-    
+
     def _filter_by_symbol(self, data: list, symbol: str) -> list:
         """This function takes in a list of data and a symbol and returns a list of data for that symbol
 
@@ -135,7 +138,7 @@ class VinterAPI(VinterAPIABC):
         """
 
         symbol, frequency = VinterValidation.validate_symbol_frequency(symbol)
-        
+
         data = self.get_all_active_symbols()
 
         output = self._filter_by_symbol(data=data, symbol=symbol)
@@ -151,9 +154,9 @@ class VinterAPI(VinterAPIABC):
         Returns
         -------
             Weight of the current rebalance of the multi_assets symbol
-            
+
             OR
-            
+
             ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
 
         """
@@ -171,7 +174,7 @@ class VinterAPI(VinterAPIABC):
 
         if output is None or output == "":
             raise ValueError("No data was found for the symbol: {}".format(symbol))
-        
+
         return output
 
     def get_contributions(self, symbol: str) -> dict:
@@ -211,13 +214,13 @@ class VinterAPI(VinterAPIABC):
         Returns
         -------
             Date of the previous rebalance of the multi_assets symbol
-            
+
             OR
-            
+
             ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
-            
+
             OR
-            
+
             None if the symbol Rebalance is not scheduled
 
         """
@@ -241,13 +244,13 @@ class VinterAPI(VinterAPIABC):
         Returns
         -------
             Date of the previous review of the multi_assets symbol
-            
+
             OR
-            
+
             ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
-            
+
             OR
-            
+
             None if the symbol Review is not scheduled
 
         """
@@ -271,13 +274,13 @@ class VinterAPI(VinterAPIABC):
         Returns
         -------
             Date of the next review of the multi_assets symbol
-            
+
             OR
-            
+
             ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
-            
+
             OR
-            
+
             None if the symbol Review is not scheduled
 
         """
@@ -301,13 +304,13 @@ class VinterAPI(VinterAPIABC):
         Returns
         -------
             Date of the next rebalance of the multi_assets symbol
-            
+
             OR
-            
+
             ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
-            
+
             OR
-            
+
             None if the symbol Rebalance is not scheduled
 
         """
@@ -331,11 +334,11 @@ class VinterAPI(VinterAPIABC):
         Returns
         -------
             Weight of the next rebalance of the multi_assets symbol
-            
+
             OR
-            
+
             ValueError if the symbol is not a present in the list of active symbols for asset_type multi_assets
-            
+
             OR
 
             None if the symbol Rebalance is not present in the payload
@@ -355,12 +358,11 @@ class VinterAPI(VinterAPIABC):
 
         return output
 
-
     def get_data_by_date(self, symbol: str, dates: Union[str, list]) -> dict:
         """This function takes in a symbol and a date and returns a dictionary of the data for that date
 
         This function is only for daily data.
-        
+
         Parameters
         ----------
         symbol : str
@@ -395,8 +397,10 @@ class VinterAPI(VinterAPIABC):
         data = self.get_data_by_time(symbol=symbol, start=start_date, end=last_date)
 
         return data
-           
-    def get_data_by_time(self, symbol: str, start: str, end: str = None, limit: int = 1000) -> dict:
+
+    def get_data_by_time(
+        self, symbol: str, start: str, end: str = None, limit: int = 1000
+    ) -> dict:
         """This function takes in a symbol and a start and end date and returns a dictionary of the data
         for that period
 
@@ -416,22 +420,29 @@ class VinterAPI(VinterAPIABC):
         """
         url = VinterUrl.get_url_by_symbol(asset_type=self.asset_type, symbol=symbol)
 
-        params = {"symbol": symbol, "start_time": start, "end_time": end, "limit": limit}
+        params = {
+            "symbol": symbol,
+            "start_time": start,
+            "end_time": end,
+            "limit": limit,
+        }
         headers = {"Authorization": self.api_key}
         response = self.httpx_client.get(url, params=params, headers=headers)
 
-        response.raise_for_status() # Raise an exception if the request fails
+        response.raise_for_status()  # Raise an exception if the request fails
 
         data = response.json()["data"]
 
-        if len(data) == 0:               
-            raise ValueError(f"No data was found for the symbol: {symbol} between {start} and {end}.")
+        if len(data) == 0:
+            raise ValueError(
+                f"No data was found for the symbol: {symbol} between {start} and {end}."
+            )
 
         return data
 
     def save_data_to_file(
         self, data: dict, filename: str, file_type: str = "csv", seprator: str = ","
-    ) -> None: # pragma: no cover
+    ) -> None:  # pragma: no cover
         """This function takes in a dictionary of data and a filename and saves the data to a csv file
 
         Parameters
@@ -449,7 +460,6 @@ class VinterAPI(VinterAPIABC):
         """
         file_type = file_type.lower()
         if file_type not in ["csv", "json"]:
-
             raise ValueError("The file type must be either csv or json")
 
         if file_type == "json":
@@ -472,5 +482,3 @@ class VinterAPI(VinterAPIABC):
                     csv.DictWriter(
                         f, row.keys(), delimiter=seprator, lineterminator="\n"
                     ).writerow(row)
-
-
