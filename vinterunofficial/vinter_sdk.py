@@ -473,4 +473,3 @@ class VinterAPI(VinterAPIABC):
                         f, row.keys(), delimiter=seprator, lineterminator="\n"
                     ).writerow(row)
 
-
