@@ -1,11 +1,14 @@
 import websocket
 from .utils import VinterUrl
 
+
 class VinterAPIWS:
-    def __init__(self, symbol, token, asset_type, on_message, on_error, on_close, on_open):
-        '''The function takes in a symbol, token, asset type, and four callback functions. It then creates
+    def __init__(
+        self, symbol, token, asset_type, on_message, on_error, on_close, on_open
+    ):
+        """The function takes in a symbol, token, asset type, and four callback functions. It then creates
         a websocket connection to the url for the symbol and asset type.
-        
+
         Parameters
         ----------
         symbol
@@ -22,8 +25,8 @@ class VinterAPIWS:
             A function that will be called when the websocket is closed.
         on_open
             This is a callback function that will be called when the connection is opened.
-        
-        '''
+
+        """
         self.ws = None
         self.symbol = symbol
         self.token = token
@@ -35,19 +38,17 @@ class VinterAPIWS:
         self.on_open = on_open
 
     def get_ws_url(self):
-        '''It takes the asset type and symbol and returns the websocket url
-        
+        """It takes the asset type and symbol and returns the websocket url
+
         Returns
         -------
             The websocket url for the asset type and symbol.
-        
-        '''
+
+        """
         return VinterUrl.websocket_url(self.asset_type, self.symbol)
 
     def open(self):
-        '''The function opens a websocket connection to the url specified in the constructor
-        
-        '''
+        """The function opens a websocket connection to the url specified in the constructor"""
         self.ws = websocket.WebSocketApp(
             self.url,
             on_message=self.on_message,
@@ -58,8 +59,5 @@ class VinterAPIWS:
         self.ws.run_forever()
 
     def close(self):
-        '''The function closes the websocket connection
-        
-        '''
+        """The function closes the websocket connection"""
         self.ws.close()
-

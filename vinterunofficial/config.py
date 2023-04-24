@@ -3,10 +3,12 @@ from enum import Enum
 APIBASE = "https://www.vinterapi.com/api/v3"
 WSBASE = "wss://www.vinterapi.com/ws"
 
+
 class WsAssetType(Enum):
     MULTI_ASSET = "multi_assets"
     SINGLE_ASSET = "single_assets"
     NAV = "nav"
+
 
 class WsAssetUrl(Enum):
     MULTI_ASSET = {
@@ -22,15 +24,18 @@ class WsAssetUrl(Enum):
         "url": f"{WSBASE}/{WsAssetType.NAV.value}",
     }
 
+
 class Frequency(Enum):
     REAL_TIME = "r"
     HOURLY = "h"
     DAILY = "d"
 
+
 class FrequencyApiType(Enum):
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
+
 
 class AssetType(Enum):
     MULTI_ASSET = "multi_assets"
@@ -38,11 +43,13 @@ class AssetType(Enum):
     STAKING_YIELD = "staking_yields"
     NAV = "nav"
 
+
 class ActiveAssetType(Enum):
     MULTI_ASSET = "active_multi_assets"
     SINGLE_ASSET = "active_single_assets"
     STAKING_YIELD = "active_staking_yields"
     NAV = "active_nav"
+
 
 class AssetUrl(Enum):
     MULTI_ASSET_REAL_TIME = {
