@@ -14,4 +14,4 @@ doc:
 	cd docs && make html
 
 pre-commit-file:
-    pre-commit install
+	pre-commit install
