@@ -13,5 +13,11 @@ install:
 doc:
 	cd docs && make html
 
+mkdocs-serve:
+	mkdocs serve
+
+mkdocs-build:
+	mkdocs build
+
 pre-commit-file:
 	pre-commit install

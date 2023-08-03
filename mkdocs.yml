@@ -1,0 +1,41 @@
+site_name: vinterunofficial  # The name we have defined
+
+docs_dir: mdocs
+
+theme: 
+  # name: mkdocs
+  name: "material" #Using material theme. There are many other options also
+  features:
+    - content.code.copy
+
+plugins:
+  - search  # To have search functionality on the document
+  - mkdocstrings  # To generate documentation from the code docstrings
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+
+nav: # Setting up the navigation. Te below list will be tabs on left panel
+  # - home: README.md # This is the home page
+  - index.md
+
+  - Library:
+    - vinterunofficial_doc/config.md
+    - vinterunofficial_doc/utils.md
+    - vinterunofficial_doc/vinter_abc.md
+    - vinterunofficial_doc/vinter_sdk.md
+    - vinterunofficial_doc/vinter_sdk_async.md
+    - vinterunofficial_doc/vinter_sdk_ws.md
+
+  - Tests: 
+    - tests_doc/test_api.md
+    - tests_doc/test_async_api.md
+    - tests_doc/test_vinter_utils.md
+    - tests_doc/test_ws.md

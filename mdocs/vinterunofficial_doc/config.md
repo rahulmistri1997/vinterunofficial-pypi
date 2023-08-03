@@ -1,0 +1,2 @@
+# config.py
+::: vinterunofficial.config
