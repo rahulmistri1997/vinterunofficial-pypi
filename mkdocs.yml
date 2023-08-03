@@ -1,16 +1,63 @@
 site_name: vinterunofficial  # The name we have defined
-
+repo_url: https://github.com/rahulmistri1997/vinterunofficial-pypi
 docs_dir: mdocs
 
 theme: 
   # name: mkdocs
   name: "material" #Using material theme. There are many other options also
   features:
+    # - navigation.instant
+    # -- Tabs TopBar ---
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    # -- Tabs TopBar ---
+    # --- Sidebar-Section ---
+    # - navigation.sections
+    # --- Sidebar-Section ---
+    # - blog
+    # - content.action.edit
+    # - content.action.view
+    # - content.code.annotate
     - content.code.copy
+    # - content.code.select
+    # - content.tabs.link
+    - content.tooltips
+    # - header.autohide
+    # - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    # - navigation.instant
+    # - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+  palette:
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
 
 plugins:
   - search  # To have search functionality on the document
   - mkdocstrings  # To generate documentation from the code docstrings
+  # - blog # If blogs are required enable this
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -26,13 +73,20 @@ nav: # Setting up the navigation. Te below list will be tabs on left panel
   # - home: README.md # This is the home page
   - index.md
 
-  - Library:
-    - vinterunofficial_doc/config.md
-    - vinterunofficial_doc/utils.md
-    - vinterunofficial_doc/vinter_abc.md
-    - vinterunofficial_doc/vinter_sdk.md
-    - vinterunofficial_doc/vinter_sdk_async.md
-    - vinterunofficial_doc/vinter_sdk_ws.md
+  # - Blog:
+  #   - blog/index.md
+
+  - VinterSDK:
+
+    - Abstraction:
+      - vinterunofficial_doc/vinter_abc.md
+    - Utility:
+      - vinterunofficial_doc/config.md
+      - vinterunofficial_doc/utils.md
+    - Library:
+      - vinterunofficial_doc/vinter_sdk.md
+      - vinterunofficial_doc/vinter_sdk_async.md
+      - vinterunofficial_doc/vinter_sdk_ws.md
 
   - Tests: 
     - tests_doc/test_api.md
