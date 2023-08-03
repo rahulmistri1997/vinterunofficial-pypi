@@ -12,3 +12,4 @@ websocket-client==1.5.1
 readme-coverage-badger==0.1.2
 pre-commit==3.2.2
 black==23.3.0
+furo==2023.7.26
