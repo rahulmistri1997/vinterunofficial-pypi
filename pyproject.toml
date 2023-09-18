@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vinterunofficial"
 version = "0.1.8"
-dependencies = ["httpx==0.23.3", "websocket-client==1.5.1"]
+dependencies = ["httpx>=0.23.3", "websocket-client>=1.5.1"]
 
 [project.readme]
 file = "README.md"
