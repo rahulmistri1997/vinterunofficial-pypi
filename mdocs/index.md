@@ -34,6 +34,13 @@ pip install vinterunofficial
 - The synchronous class is called VinterAPI.
 - The asynchronous class repeats the same methods as the synchronous class, but can be called with the await keyword.
 
+## Version of the Library
+```python
+import vinterunofficial
+
+print(vinterunofficial.__version__)
+```
+
 ## Importing the library
 ```python
 from vinterunofficial import VinterAPI, VinterAPIAsync
@@ -43,8 +50,7 @@ from vinterunofficial import VinterAPI, VinterAPIAsync
 ```python
 from vinterunofficial import VinterAPI
 
-# vinter = VinterAPI(<APIKEY>, <AssetType>)
-vinter = VinterAPI("<APIKey>", "single_assets")
+vinter = VinterAPI(api_key="<APIKey>", asset_type="single_assets")
 
 selected_symbol = "btc-usd-p-d"
 
@@ -64,8 +70,7 @@ print("The current price of {} is {} at {}".format(selected_symbol, current_pric
 ```python
 from vinterunofficial import VinterAPI
 
-# vinter = VinterAPI(<APIKEY>, <AssetType>)
-vinter = VinterAPI("<APIKey>", "single_assets")
+vinter = VinterAPI(api_key="<APIKey>", asset_type="single_assets")
 
 selected_symbol = "btc-usd-p-d"
 
@@ -83,7 +88,7 @@ print(f"The Response : {data}")
 ```python
 from vinterunofficial import VinterAPI
 
-vinter = VinterAPI("<APIKey>", "single_assets")
+vinter = VinterAPI(api_key="<APIKey>", asset_type="single_assets")
 
 selected_symbol = "btc-usd-p-d"
 
@@ -100,8 +105,8 @@ print("The current price of {} is {}".format(selected_symbol, current_price))
 ```python
 from vinterunofficial import VinterAPI
 
-single_assets = VinterAPI("<APIKey>", "single_assets")
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+single_assets = VinterAPI(api_key="<APIKey>", asset_type="single_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 all_active_symbol_multi = [asset["symbol"] for asset in multi_assets.get_all_active_symbols()]
 all_active_symbol_single = [asset["symbol"] for asset in single_assets.get_all_active_symbols()]
@@ -115,7 +120,7 @@ print("All active symbols for single assets: {}".format(all_active_symbol_single
 ```python
 from vinterunofficial import VinterAPI
 
-single_assets = VinterAPI("<APIKey>", "single_assets")
+single_assets = VinterAPI(api_key="<APIKey>", asset_type="single_assets")
 
 selected_symbol = "btc-usd-p-r"
 
@@ -129,7 +134,7 @@ print("The contribution of {} is {}".format(selected_symbol, single_asset_contri
 ```python
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -143,7 +148,7 @@ print("The weight of {} is {}".format(selected_symbol, multi_asset_weight))
 ```python
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -157,7 +162,7 @@ print("The next rebalance date of {} is {}".format(selected_symbol, next_rebalan
 ```python
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -172,7 +177,7 @@ print("The previous rebalance date of {} is {}".format(selected_symbol, previous
 
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -187,7 +192,7 @@ print("The next review date of {} is {}".format(selected_symbol, next_review_dat
 
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
@@ -202,7 +207,7 @@ print("The previous review date of {} is {}".format(selected_symbol, previous_re
 
 from vinterunofficial import VinterAPI
 
-multi_assets = VinterAPI("<APIKey>", "multi_assets")
+multi_assets = VinterAPI(api_key="<APIKey>", asset_type="multi_assets")
 
 selected_symbol = "vnby-bold1-2-d"
 
